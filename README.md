@@ -3,6 +3,16 @@
 A full-stack authentication-based task management dashboard built using **React, Tailwind CSS, Node.js, Express, and MongoDB**.  
 Users can register, log in, and manage their personal tasks securely.
 
+🔗 **Quick Navigation**
+- [Overview](#-auth-based-task-dashboard-frontend--backend)
+- [Tech Stack](#-tech-stack)
+- [Project Structure](#-project-structure)
+- [Demo Video](#-demo-video)
+- [Setup Instructions](#️-setup-instructions)
+- [How to Run the Application](#️-how-to-run-the-application)
+- [API Testing](#-api-testing-postman)
+- [Production Scaling Notes](#-how-would-you-scale-this-for-production)
+
 ---
 
 ## 📌 Tech Stack
@@ -46,9 +56,21 @@ intern-project/
 └── README.md
 ---
 
+## 🎥 Demo Video
+
+> 📌 **Working demo of the project**
+
+🔗 video link (YouTube):  
+**Demo Video:** https://youtu.be/FetAHn9kkWo
+
+<img width="1919" height="820" alt="image" src="https://github.com/user-attachments/assets/8ed424ba-2c81-496e-8dcc-5a17079af792" />
+
+---
+
 ## ⚙️ Setup Instructions
 
 ### 1️⃣ Clone the Repository
+
 ```bash
 git clone https://github.com/AniketChoudhari01/frontend-intern-auth-dashboard.git
 cd frontend
