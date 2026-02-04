@@ -1,14 +1,20 @@
 import { useState } from "react";
 import api from "../api/axios";
 import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Register() {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const navigate = useNavigate();
 
   const submit = async () => {
-    await api.post("/auth/register", form);
-    navigate("/");
+    try {
+      await api.post("/auth/register", form);
+      toast.success("Registration successful");
+      navigate("/");
+    } catch (err) {
+      toast.error(err.response?.data?.message || "Registration failed");
+    }
   };
 
   return (
@@ -19,23 +25,28 @@ export default function Register() {
         <input
           className="border p-2 w-full"
           placeholder="Name"
+          value={form.name}
           onChange={(e) => setForm({ ...form, name: e.target.value })}
         />
+
         <input
           className="border p-2 w-full"
           placeholder="Email"
+          value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
+
         <input
           className="border p-2 w-full"
           type="password"
           placeholder="Password"
+          value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
 
         <button
           onClick={submit}
-          className="bg-green-600 text-white w-full py-2 rounded"
+          className="bg-green-600 hover:bg-green-700 text-white w-full py-2 rounded"
         >
           Register
         </button>

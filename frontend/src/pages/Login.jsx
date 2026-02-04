@@ -2,6 +2,7 @@ import { useContext, useState } from "react";
 import api from "../api/axios";
 import { AuthContext } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function Login() {
   const { login } = useContext(AuthContext);
@@ -12,8 +13,11 @@ export default function Login() {
     try {
       const res = await api.post("/auth/login", form);
       login(res.data.token);
+      toast.success("Login successful");
     } catch (err) {
-      setError(err.response?.data?.message || "Login failed");
+      const msg = err.response?.data?.message || "Login failed";
+      setError(msg);
+      toast.error(msg);
     }
   };
 
@@ -27,18 +31,21 @@ export default function Login() {
         <input
           className="border p-2 w-full"
           placeholder="Email"
+          value={form.email}
           onChange={(e) => setForm({ ...form, email: e.target.value })}
         />
+
         <input
           className="border p-2 w-full"
           type="password"
           placeholder="Password"
+          value={form.password}
           onChange={(e) => setForm({ ...form, password: e.target.value })}
         />
 
         <button
           onClick={submit}
-          className="bg-blue-600 text-white w-full py-2 rounded"
+          className="bg-blue-600 hover:bg-blue-700 text-white w-full py-2 rounded"
         >
           Login
         </button>

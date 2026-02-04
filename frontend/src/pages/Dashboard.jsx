@@ -1,25 +1,45 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import Navbar from "../components/Navbar";
+import { toast } from "react-toastify";
 
 export default function Dashboard() {
   const [tasks, setTasks] = useState([]);
   const [title, setTitle] = useState("");
 
   const loadTasks = async () => {
-    const res = await api.get("/tasks");
-    setTasks(res.data);
+    try {
+      const res = await api.get("/tasks");
+      setTasks(res.data);
+    } catch (err) {
+      toast.error("Failed to load tasks");
+    }
   };
 
   const addTask = async () => {
-    await api.post("/tasks", { title });
-    setTitle("");
-    loadTasks();
+    if (!title.trim()) {
+      toast.info("Please enter a task title");
+      return;
+    }
+
+    try {
+      await api.post("/tasks", { title });
+      toast.success("Task added successfully");
+      setTitle("");
+      loadTasks();
+    } catch (err) {
+      toast.error("Failed to add task");
+    }
   };
 
   const deleteTask = async (id) => {
-    await api.delete(`/tasks/${id}`);
-    loadTasks();
+    try {
+      await api.delete(`/tasks/${id}`);
+      toast.success("Task deleted");
+      loadTasks();
+    } catch (err) {
+      toast.error("Failed to delete task");
+    }
   };
 
   useEffect(() => {
@@ -41,7 +61,7 @@ export default function Dashboard() {
           />
           <button
             onClick={addTask}
-            className="bg-blue-600 text-white px-4 rounded"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 rounded"
           >
             Add
           </button>
@@ -53,7 +73,10 @@ export default function Dashboard() {
             className="border p-2 flex justify-between items-center"
           >
             <span>{t.title}</span>
-            <button onClick={() => deleteTask(t._id)} className="text-red-500">
+            <button
+              onClick={() => deleteTask(t._id)}
+              className="text-red-500 hover:text-red-700"
+            >
               Delete
             </button>
           </div>
